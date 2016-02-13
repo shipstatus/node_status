@@ -4,7 +4,12 @@ language: node_js
 
 # Version number
 node_js:
+  - 0.10
   - 0.12
+  - 4.0
+  - 4.2
+  - iojs-1.0.0
+  - iojs-2.0.0
 
 env:
   global:
@@ -17,9 +22,17 @@ env:
 
 build:
 
+  pre_ci_boot:
+    image_name: drydock/u12nod
+    image_tag: prod
+    pull: true
+    envs: FOO=BAR
+    options: --privileged=true
+
   ci:
     - ps -eax
     - ls -al
+    - node --version
 
   post_ci:
     - echo "true"
