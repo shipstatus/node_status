@@ -26,8 +26,7 @@ build:
     image_name: drydock/u14nodpls
     image_tag: prod
     pull: true
-    envs: FOO=BAR
-    options: --privileged=true
+    options: --privileged=true -r FOO=BAR
 
   ci:
     - ps -eax
