@@ -1,39 +1,33 @@
-# Language setting
+
 language: node_js
 
-
-# Version number
 node_js:
-  - 0.10
   - 0.12
-  - 4.0
-  - 4.2
-  - iojs-1.0.0
-  - iojs-2.0.0
+
+services:
+ - mongodb
+ - mysql
+ - neo4j
 
 env:
   global:
-    - FOO=FUBU
-    - FO1=BUBU
-    - BOO=GUBU
-
-  matrix:
-    - M1=ONE
+    - XUNIT_FILE=shippable/testresults/result.xml
 
 build:
-
   pre_ci_boot:
-    image_name: drydock/u12nod
+    image_name: drydock/u14nodall
     image_tag: prod
     pull: true
-    options: --privileged=true -e FOO=BAR
 
   ci:
-    - ps -eax
-    - ls -al
-    - node --version
+    - npm install
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - mysql -e 'create database if not exists test;'
+    - npm test
+    - mongo test --eval "db.dropDatabase()"
+    - ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha test.js -- -u tdd
+    - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
 
-  post_ci:
-    - echo "true"
-
-
+  on_success:
+    - echo "Everything passed!"
