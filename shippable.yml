@@ -23,7 +23,7 @@ env:
 build:
 
   pre_ci_boot:
-    image_name: drydock/u12nod
+    image_name: drydock/u12nodall
     image_tag: prod
     pull: true
     options: --privileged=true -e FOO=BAR
