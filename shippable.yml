@@ -23,11 +23,10 @@ env:
 build:
 
   pre_ci_boot:
-    image_name: drydock/u12nod
+    image_name: drydock/u12nodpls
     image_tag: prod
     pull: true
-    envs: FOO=BAR
-    options: --privileged=true
+    options: --privileged=true -e FOO=BAR
 
   ci:
     - ps -eax
