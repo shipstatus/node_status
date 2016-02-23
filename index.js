@@ -5,29 +5,29 @@ var knex = require('knex');
 var neo4j = require('neo4j');
 
 //mongo
-var express = require("express"),
-    mongoose = require("mongoose"),
+var express = require('express'),
+    mongoose = require('mongoose'),
     app = express();
 
 
 //DB initializations
 
 /* ================= mongo =================*/
-mongoose.connect("mongodb://localhost/test", function (err) {
+mongoose.connect('mongodb://localhost/test', function (err) {
   if (!err) {
-    console.log("Connected to MongoDB");
+    console.log('Connected to MongoDB');
   } else {
     console.error(err);
   }
 });
 
-app.get("/", function (req, res) {
-  res.send("Hey buddy!");
+app.get('/', function (req, res) {
+  res.send('Hey buddy!');
 });
 
-var Thing = require("./model");
+var Thing = require('./Model.js');
 
-app.get("/:name", function (req, res) {
+app.get('/:name', function (req, res) {
   Thing.find({ name: req.params.name }, function (err, t) {
     if (t.length < 1) {
       var thing = new Thing();
